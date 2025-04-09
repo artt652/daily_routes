@@ -1,8 +1,8 @@
 {
   "domain": "route",
   "name": "route",
-  "version": "1.0",
-  "documentation": "https://github.com/mavrikkk/ha_routes",
+  "version": "1.0.1",
+  "documentation": "https://github.com/mavrikkkartt/ha_routes",
   "dependencies": [],
   "codeowners": ["@mavrikkk"],
   "requirements": []
