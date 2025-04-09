@@ -9,6 +9,10 @@
 
 2025/04/04 Обновление кода для совместимости с ХА 2025.4.
 
+<details>
+
+<summary>Previous version</summary>
+
 2021/09/28 Добавил параметр внешнего адреса, так как base_url в новых версиях нет. После установки ОБЯЗАТЕЛЬНО почистите кеш браузера!
 
 2020/06/30 Поддержка последних версий HA. После установки ОБЯЗАТЕЛЬНО почистите кеш браузера!
@@ -32,6 +36,8 @@ What's new:
 2020/02/11 now you can see the time on every point
 
 2020/02/12 The side panel creates automatically. Now the component is secured by HA authority
+
+</details>
 
 <p><b>РУССКИЙ:</b></p>
 
@@ -68,7 +74,7 @@ route:
 <p><b>3. Configuration</b></p>
 <p>Add the following lines in the "configuration.yaml" file:</p>
 <pre><code>
-route:
+  route:
   haddr: your_ha_address
   days: num_days
   mindst: your_min_dst
