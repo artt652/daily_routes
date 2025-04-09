@@ -14,8 +14,6 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     for key,value in sensors_gps.states.items():
         async_add_entities([GPSSensor(sensors_gps, key)])
 
-
-
 class GPSSensor(Entity):
 
     def __init__(self, sensors_gps, entity_id):
@@ -24,8 +22,6 @@ class GPSSensor(Entity):
         self._entity = entity_id
         self._name = 'virtual_'+self._entity.replace('.','_')
         self._state = ''
-
-
 
     #for HASS
     @property
