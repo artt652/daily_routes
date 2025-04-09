@@ -488,7 +488,42 @@ L$1.polylineDecorator = function (paths, options) {
 
 })));
 </script>
-<style>html, body, #map {width: 95%; height: 95%; margin-top: 2%; margin-left: 2.5%;}</style>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1
+  }
+
+  #map {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20
+  }
+
+  form[name="myForm"] {
+    position: absolute;
+    top: 10px;  /* Adjust this value to fine-tune the vertical position */
+    right: 10px;  /* Aligns the form to the right edge */
+    z-index: 40;  /* Ensure the form is on top of the map */
+    background-color: rgba(255, 255, 255, 0); /* Optional: for visibility */
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Adds space between the selects */
+  }
+
+  select {
+    z-index: 60; /* Ensure select elements are on top of the form */
+    padding: 5px;
+    border-radius: 5px;
+  }
+</style>
 </head>
 <body>
 <form name="myForm">
@@ -536,21 +571,26 @@ function mainAction(){
 myForm.elements.addEventListener("change", mainAction);
 myForm.date.addEventListener("change", mainAction);
 
-async function doRequest(date,device){
-let url = haddr_variable+'/api/history/period/'+date+time_zone_variable+'?filter_entity_id=' + device;
-let response = await fetch(url,{headers: {'Authorization': 'Bearer access_token_variable', 'content-type': 'application/json'}});
-if (response.ok) {
-  let json = await response.json();
-  data = json[0];
-  if (data !== undefined && data !== null) {
-  createMap(data);
+async function doRequest(date, device) {
+  let url = `/api/history/period/${date}${time_zone_variable}?filter_entity_id=${device}`;
+  let response = await fetch(url, {
+    headers: {
+      'Authorization': 'Bearer access_token_variable',
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (response.ok) {
+    let json = await response.json();
+    let data = json[0];
+    if (data !== undefined && data !== null) {
+      createMap(data);
+    } else {
+      clearMap();
+    }
+  } else {
+    clearMap();
   }
-  else{
-  clearMap();
-  }
-} else {
-clearMap();
-}
 }
 
 function createMap(data) {
