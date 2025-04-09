@@ -2,7 +2,7 @@
   "domain": "route",
   "name": "route",
   "version": "1.0.1",
-  "documentation": "https://github.com/mavrikkk/ha_routes",
+  "documentation": "https://github.com/artt652/ha_routes",
   "dependencies": [],
   "codeowners": ["@mavrikkk"],
   "requirements": []
