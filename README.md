@@ -42,6 +42,11 @@ What's new:
 <p><b>РУССКИЙ:</b></p>
 
 <p><b>1. Установка</b></p>
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=artt652&category=integration&repository=ha_routes)
+
+либо
+
 <p>Содержимое папки "route" скопировать в директорию "config_folder_homeassistant/custom_components/route".</p>
 
 <p><b>2. Настройка device_tracker</b></p>
@@ -63,7 +68,8 @@ route:
 <p>здесь "your_ha_address" - внешний адрес вашего HA, "num_days" - это количество дней, для выбора из истории, "your_sensor_entity_id" - это ID ваших sensor, "your_device_tracker_entity_id" - это ID ваших device_tracker, "your_min_dst" - минимальная дистанция между точками, для отображения на карте, 'your_timezone' - это часовой пояс, например '+03:00', "your_long_life_token" - предварительно полученный во фронтенде HomeAssistant токен доступа для использования REST API.
 ВНИМАНИЕ. Для правильной работы интеграции убедитесь, что в конфигурации HA правильно заполнен параметр base_url</p>
 
-<p><b>BAD ENGLISH:</b></p>
+<details>
+<summary><b>BAD ENGLISH</b></summary>
 
 <p><b>1. Installation</b></p>
 <p>Place the "route" folder to "config_folder_homeassistant/custom_components/".</p>
@@ -85,3 +91,4 @@ route:
     - your_device_tracker_entity_id1
 </code></pre>
 <p>here "your_ha_address" is your homeasssistant address, "num_days" is number of days to choose from in history, here "your_min_dst" is minimal distance between two points on map, here "your_sensor_entity_id" is the ID of your template sensor, "your_device_tracker_entity_id" is the ID of your device_tracker, 'your_timezone' is your timezone, for example '+03:00', "your_long_life_token" is the access token previously received in the frontend of HomeAssistant to use REST API. ATTENTION. Make sure the base_url parameter is correctly configured in the HA configuration.yaml</p>
+</details>
