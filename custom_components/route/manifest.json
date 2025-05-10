@@ -1,7 +1,7 @@
 {
   "domain": "route",
-  "name": "route",
-  "version": "1.0.1",
+  "name": "Daily Routes",
+  "version": "1.0",
   "documentation": "https://github.com/artt652/ha_routes",
   "dependencies": [],
   "codeowners": ["@mavrikkk"],
