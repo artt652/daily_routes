@@ -45,7 +45,6 @@ route:
 ```
 
 <p>
-  "num_days" - это количество дней, для выбора из истории</p> 
   "device_tracker.entity_id1", "person.entity_id1" - объекты отслеживания</p> 
   "your_long_life_token" - предварительно полученный во фронтенде HomeAssistant токен доступа для использования REST API</p>
 </p>
