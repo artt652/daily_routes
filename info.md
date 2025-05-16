@@ -4,37 +4,7 @@
 
 What's new: / Что нового:
 
-2025/04/04 Update code for work with HA 2025.4 / Обновление кода для совместимости с ХА 2025.4.
-
-<details>
-<summary>Previous version / Прошлые версии</summary>
-
-
-2021/09/28 Добавил параметр внешнего адреса, так как base_url в новых версиях нет. После установки ОБЯЗАТЕЛЬНО почистите кеш браузера!
-
-2020/06/30 Поддержка последних версий HA. После установки ОБЯЗАТЕЛЬНО почистите кеш браузера!
-
-2020/05/07 В список можно добавлять как sensor так и device_tracker. В том случае, если вы добавили для отслеживания device_tracker в системе автоматически создастся виртуальный сенсор. ВНИМАНИЕ! Убедитесь, что все нужные сенсоры (в том числе и виртуальные) записывают историю в БД.
-
-2020/02/07 Теперь можно задавать список из нескольких устройств, а также выбирать дату
-
-2020/02/11 Теперь на каждой точке указаны дата и время в этой точке
-
-2020/02/12 Боковая панель создается автоматически. Теперь компонент защищен авторизацией HA
-
-What's new:
-
-2021/09/28 Add 'haddr' parameter istead of 'base_url'. Please, clean browser cache after installation!
-
-2020/06/30 Support for last HA versions. Please, clean browser cache after installation!
-
-2020/02/07 now you can choose more than 1 device and choose date
-
-2020/02/11 now you can see the time on every point
-
-2020/02/12 The side panel creates automatically. Now the component is secured by HA authority
-
-</details>
+2025/04/04 Update code for work with HA 2025.4 / Обновление кода для совместимости с ХА 2025
 
 **Pre-installation instructions**
 
