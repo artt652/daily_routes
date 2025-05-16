@@ -2,7 +2,8 @@
 
 # Routes integration
 
-<p>Интеграция позволяет отображать историю перемещений (назовем это маршрутами или направлениями) на карте в вашем HomeAssistant, используя библиотеку Leaflet, а также плагин <a href='https://github.com/bbecquet/Leaflet.PolylineDecorator'>leaflet.polylineDecorator.js</a></p>
+<p>В Homeassistant использутся отслеживание на основе зон, и координаты передвижения объектов хранятся не все, а только те, которые зафиксированы при смене зоны. Чтобы этого избежать, в HA создается новый виртуальнный sensor, у которого атрибуты будут скопированы у нужного device_tracker, это позволяет сохранить всю историю предвижений.</p>
+<p>Данная интеграция позволяет отображать историю перемещений (назовем это маршрутами или направлениями) на карте в вашем HomeAssistant, используя библиотеку Leaflet, а также плагин <a href='https://github.com/bbecquet/Leaflet.PolylineDecorator'>leaflet.polylineDecorator.js</a></p>
 
 Что нового:
 
@@ -22,23 +23,24 @@
 
 2025/04/04 Обновление кода для совместимости с ХА 2025.X.
 
-<p><b>В Homeassistant использутся отслеживание на основе зон, и координаты передвижения объектов хранятся не все, а только те, которые зафиксированы при смене зоны. Чтобы этого избежать, в HA создается новый виртуальнный sensor, у которого атрибуты будут скопированы у нужного device_tracker, это позволяет сохранить всю историю предвижений.</b></p>
-
 <p><b>1. Установка</b></p>
 
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=artt652&category=integration&repository=ha_routes)
 
-либо
+либо вручную:
 
 <p>Содержимое папки "route" скопировать в директорию /homeassistant/custom_components/route</p>
 
 <p><b>2. Настройка</b></p>
 <p>Добавьте в ваш файл конфигурации "configuration.yaml" следующие строки:</p>
 
-
 ```yaml
 route:
   token: your_long_life_token
+  days: 7
+  mindst: 0.08
+  time_zone: "+03:00"
+  tiles_url: https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?{foo}
   devices:
     - device_tracker.entity_id1
     - person.entity_id1
