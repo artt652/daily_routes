@@ -87,7 +87,7 @@ async def async_setup(hass: HomeAssistant, config) -> bool:
         async_register_built_in_panel(  
             hass,  
             "iframe",  
-            "Routes",  
+            "Daily Routes",  
             "mdi:routes",  
             "myroute",  
             {"url": "/route/route.html"},
