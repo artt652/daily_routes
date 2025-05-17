@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset='utf-8'>
-<meta http-equiv='Cache-Control' content='no-cache, no-store, must-revalidate' />
-<meta http-equiv='Pragma' content='no-cache' />
-<meta http-equiv='Expires' content='0' />
-<title>Сегодняшний маршрут</title>
-<link rel='stylesheet' href='https://unpkg.com/leaflet@1.4.0/dist/leaflet.css' integrity='sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==' crossorigin=''/>
-<script src='https://unpkg.com/leaflet@1.4.0/dist/leaflet.js' integrity='sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==' crossorigin=''></script>
+<!DOCTYPE html>  
+<html>  
+<head>  
+<meta charset='utf-8'>  
+<meta http-equiv='Cache-Control' content='no-cache, no-store, must-revalidate' />  
+<meta http-equiv='Pragma' content='no-cache' />  
+<meta http-equiv='Expires' content='0' />  
+<title>Дневной маршрут</title>
+
+<link rel='stylesheet' href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' crossorigin=''/>
+<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js' crossorigin=''></script>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />  
+<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.min.js"></script>  
 <script type='text/javascript'>
-(function (global, factory) {
+	(function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('leaflet')) :
 	typeof define === 'function' && define.amd ? define(['leaflet'], factory) :
 	(factory(global.L));
@@ -487,200 +491,525 @@ L$1.polylineDecorator = function (paths, options) {
 };
 
 })));
-</script>
-<style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1
-  }
-
-  #map {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 20
-  }
-
-  form[name="myForm"] {
-    position: absolute;
-    top: 10px;  /* Adjust this value to fine-tune the vertical position */
-    right: 10px;  /* Aligns the form to the right edge */
-    z-index: 40;  /* Ensure the form is on top of the map */
-    background-color: rgba(255, 255, 255, 0); /* Optional: for visibility */
-    padding: 0px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px; /* Adds space between the selects */
-  }
-
-  select {
-    z-index: 60; /* Ensure select elements are on top of the form */
-    padding: 5px;
-    border-radius: 5px;
-  }
-</style>
-</head>
-<body>
-<form name="myForm">
-<select name="elements" size="1">
-</select>
-<select name="date" size="1">
-</select>
-</form>
-<div id='map'></div>
-<script type='text/javascript'>
-//var devices = ['id_1','sensor.car_gps_sensor'];
-var devices = array_of_devices_variable;
-
-var mymap = L.map('map').setView([55.755826,37.617], 12);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar', attribution: "Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors, <a href='https://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>"}).addTo(mymap);
-
-
-for (var i=0; i<devices.length; i++) {
-newOption = new Option(devices[i][0], devices[i][1]);
-myForm.elements.add(newOption);
+</script>  
+<style>  
+#map,
+body,  
+html {  
+  width: 100%;  
+  height: 100%;  
+}  
+body,  
+html {  
+  margin: 0;  
+  padding: 0;  
+  z-index: 1;  
+}  
+#map {  
+  position: absolute;  
+  top: 0;  
+  left: 0;  
+  z-index: 20;  
+}  
+form[name="myForm"] {  
+  position: absolute;  
+  top: 10px;  
+  right: 10px;  
+  z-index: 40;  
+  background-color: transparent;  
+  padding: 0;  
+  display: flex;  
+  flex-direction: column;  
+  gap: 10px;  
+}  
+select {  
+  z-index: 60;  
+  padding: 5px;  
+  border-radius: 5px;  
 }
 
-var newDate = new Date();
-let days = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
-let month = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК'];
-for (var i=0; i<number_of_days_variable; i++) {
-curr_dayofweek = days[newDate.getDay()];
-curr_date = newDate.getDate();
-curr_month = newDate.getMonth() + 1;
-curr_monthname = month[newDate.getMonth()];
-curr_year = newDate.getFullYear();
-frmDate = curr_year.toString() + '-' + curr_month.toString() + '-' +curr_date.toString() + 'T00:00:00';
-nameDate = curr_dayofweek + ' ' + curr_date.toString() + ' ' + curr_monthname + ' ' +curr_year.toString();
-newOption = new Option(nameDate, frmDate);
-myForm.date.add(newOption);
-newDate.setDate(newDate.getDate()-1);
+.leaflet-routing-container, .leaflet-routing-error {
+  width: 360px;
+  background-color: #ffffff33 !important;
+  padding-top: 0;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
-function mainAction(){
-    var selectedDevice = myForm.elements.options[myForm.elements.selectedIndex];
-	var selectedDate = myForm.date.options[myForm.date.selectedIndex];
-    doRequest(selectedDate.value,selectedDevice.value);
+</style>  
+  
+</head>  
+
+<body>  
+  
+<form name="myForm">  
+  <select name="elements" size="1"></select>  
+  <select name="date" size="1"></select>  
+  <label style="color:black;">  
+    <input type="checkbox" id="useRouting" /> На машине  
+  </label>  
+</form>  
+<div id='map'></div>  
+
+<script type='text/javascript'>  
+var devices = array_of_devices_variable;  
+let routingControl = null;  
+  
+var default_lat_variable = __default_lat_variable__;  
+var default_lon_variable = __default_lon_variable__;  
+  
+// Создание карты
+var mymap = L.map('map', {  
+  center: [default_lat_variable, default_lon_variable],  
+  zoom: 12,  
+  preferCanvas: true,  
+  layers: []  // Отключает автозагрузку OSM  
+});  
+
+// Подключение слоя тайлов Яндекс
+L.tileLayer(tiles_url_variable, {  
+//L.tileLayer('https://core-renderer-tiles.maps.yandex.net/tiles?l=map&x={x}&y={y}&z={z}&scale=4&lang=ru_RU&projection=web_mercator', {  
+  updateWhenZooming: false,  
+  keepBuffer: 10,  
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors | ' +  
+               '<a href="http://project-osrm.org/" target="_blank">OSRM</a> - Маршрутизация'  
+}).addTo(mymap);
+
+for (var i=0; i<devices.length; i++) {  
+newOption = new Option(devices[i][0], devices[i][1]);  
+myForm.elements.add(newOption);  
+}  
+  
+var newDate = new Date();  
+let days = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];  
+let month = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЯ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК'];  
+for (var i=0; i<number_of_days_variable; i++) {  
+curr_dayofweek = days[newDate.getDay()];  
+curr_date = newDate.getDate();  
+curr_month = newDate.getMonth() + 1;  
+curr_monthname = month[newDate.getMonth()];  
+curr_year = newDate.getFullYear();  
+frmDate = curr_year.toString() + '-' + curr_month.toString() + '-' +curr_date.toString() + 'T00:00:00';  
+nameDate = curr_dayofweek + ' ' + curr_date.toString() + ' ' + curr_monthname + ' ' +curr_year.toString();  
+newOption = new Option(nameDate, frmDate);  
+myForm.date.add(newOption);  
+newDate.setDate(newDate.getDate()-1);  
+}  
+  
+function mainAction(){  
+    var selectedDevice = myForm.elements.options[myForm.elements.selectedIndex];  
+	var selectedDate = myForm.date.options[myForm.date.selectedIndex];  
+    doRequest(selectedDate.value,selectedDevice.value);  
+}  
+  
+myForm.elements.addEventListener("change", mainAction);  
+myForm.date.addEventListener("change", mainAction);  
+document.getElementById("useRouting").addEventListener("change", function () {  
+  localStorage.setItem("useRouting", this.checked);  
+  mainAction();  
+    
+});  
+  
+window.addEventListener("DOMContentLoaded", () => {  
+  const saved = localStorage.getItem("useRouting");  
+  if (saved !== null) {  
+    document.getElementById("useRouting").checked = saved === "true";  
+  }  
+  mainAction();  
+});  
+  
+let mapCentered = false; // глобальная переменная  
+  
+function drawMap(massiv) {  
+  const useRouting = document.getElementById("useRouting").checked;  
+  
+  if (routingControl) {  
+    mymap.removeControl(routingControl);  
+    routingControl = null;  
+  }  
+  
+  // Удаление всех маркеров и линий, кроме тайлов  
+  mymap.eachLayer(layer => {  
+    if (layer instanceof L.Marker || layer instanceof L.Polyline) {  
+      mymap.removeLayer(layer);  
+    }  
+  });  
+  
+  if (massiv.length === 0) {  
+    if (typeof lastLat !== "undefined" && typeof lastLon !== "undefined" && lastLat !== 0 && lastLon !== 0) {  
+      mymap.flyTo([lastLat, lastLon], 15, { animate: true, duration: 0.5 });  
+    } else if (typeof zoneHomeLat !== "undefined" && typeof zoneHomeLon !== "undefined") {  
+      mymap.flyTo([zoneHomeLat, zoneHomeLon], 12, { animate: true, duration: 0.5 });  
+    } else {  
+      mymap.flyTo([55.7558, 37.6176], 12, { animate: true, duration: 0.5 }); // Москва  
+    }  
+    return;  
+  }  
+  
+    for (let i = 0; i < massiv.length; i++) {  
+      const [lat, lon, tooltip, entityPicture] = massiv[i];  
+  
+      createMarker(lat, lon, '(№' + (i + 1) + ') ' + tooltip, {  
+        entityPicture: entityPicture || null,  
+        start: i === 0,  
+        end: i === massiv.length - 1,  
+        zIndex: i === massiv.length - 1 ? 400 : (i === 0 ? 300 : 200)  
+      });  
+  }  
+  
+  const bounds = L.latLngBounds(massiv.map(p => [p[0], p[1]]));  
+  
+  if (useRouting && massiv.length > 1) {  
+    const waypoints = massiv.map(p => L.latLng(p[0], p[1]));  
+  
+    routingControl = L.Routing.control({  
+      waypoints: waypoints,  
+      createMarker: () => null,  
+      addWaypoints: false,  
+      routeWhileDragging: false,  
+      fitSelectedRoutes: true,  
+      position: 'bottomleft',  
+      collapsible: true,  
+      show: false,  
+      language: 'ru',  
+
+    }).addTo(mymap);  
+  
+    mymap.fitBounds(bounds, { padding: [30, 30] });	
+   
+//    routingControl.on('routesfound', function (e) {  
+//      setTimeout(() => {  
+//        if (e.routes && e.routes[0] && e.routes[0].bounds) {  
+//          mymap.flyToBounds(e.routes[0].bounds.pad(0.05), { animate: false, duration: 1 });  
+//		      mymap.fitBounds(e.routes[0].bounds.pad(0.05), { animate: false, duration: 1 }); 
+//        } else {  
+//          console.warn("Маршрут не найден или не содержит границ");  
+//          mymap.fitBounds(bounds, { padding: [30, 30] });  
+//        }  
+//      }, 1000);  
+//    });  
+  
+    routingControl.on('routingerror', function () {  
+      if (typeof lastLat !== "undefined" && typeof lastLon !== "undefined" && lastLat !== 0 && lastLon !== 0) {  
+        mymap.flyTo([lastLat, lastLon], 15, { animate: false, duration: 1 });  
+      } else if (typeof zoneHomeLat !== "undefined" && typeof zoneHomeLon !== "undefined") {  
+        mymap.flyTo([zoneHomeLat, zoneHomeLon], 12, { animate: false, duration: 1 });  
+      } else {  
+        mymap.flyTo([55.7558, 37.6176], 12, { animate: false, duration: 1 }); // Москва  
+      }  
+    });  
+  
+  } else {  
+    for (let i = 1; i < massiv.length; i++) {  
+      const polyline = L.polyline([massiv[i - 1], massiv[i]], {  
+        color: 'red', weight: 3, opacity: 0.6  
+      }).addTo(mymap);  
+  
+      L.polylineDecorator(polyline, {  
+        patterns: [{  
+          offset: '100%',  
+          repeat: 0,  
+          symbol: L.Symbol.arrowHead({  
+            pixelSize: 12,  
+            polygon: false,  
+            pathOptions: { stroke: true, opacity: 0.7, color: 'red', weight: 2 }  
+          })  
+        }]  
+      }).addTo(mymap);  
+    }  
+  
+    mymap.fitBounds(bounds, { padding: [30, 30] });
+  }  
+}  
+  
+// Функция центра карты при отсутствии данных или ошибке  
+function centerToFallback() {  
+  if (typeof lastLat !== "undefined" && typeof lastLon !== "undefined" && lastLat !== 0 && lastLon !== 0) {  
+    mymap.setView([lastLat, lastLon], 15);  
+  } else if (typeof zoneHomeLat !== "undefined" && typeof zoneHomeLon !== "undefined") {  
+    mymap.setView([zoneHomeLat, zoneHomeLon], 13);  
+  } else {  
+    mymap.setView([55.7558, 37.6176], 10); // Москва  
+  }  
+}  
+  
+let currentLocationMarker = null;  
+let liveTrackingTimer = null;  
+let addCurrentLocation = true;  
+  
+async function doRequest(date, device) {  
+  mapCentered = false;  // Сброс флага при новом запросе  
+  
+  let url = `/api/history/period/${date}${time_zone_variable}?filter_entity_id=${device}`;  
+  let response = await fetch(url, {  
+    headers: {  
+      'Authorization': 'Bearer access_token_variable',  
+      'Content-Type': 'application/json'  
+    }  
+  });  
+  
+  if (response.ok) {  
+    let json = await response.json();  
+    let data = json[0];  
+    if (data !== undefined && data !== null) {  
+      let basePath = await createMap(data);  
+      if (addCurrentLocation) {  
+        if (basePath.length === 0) {  
+          await updateCurrentLocation(device);  
+          drawMap([]);  
+        } else {  
+          startLiveTracking(device, basePath);  
+        }  
+      }  
+    } else {  
+      clearMap();  
+    }  
+  } else {  
+    clearMap();  
+  }  
+}  
+  
+async function createMap(data) {  
+  const arr = [];  
+  const arr1 = [];  
+  
+  for (let i = 0; i < data.length; i++) {  
+    let lat = 0, lon = 0, strdateout = '';  
+    try {  
+      lat = parseFloat(data[i]['attributes']['latitude']);  
+      lon = parseFloat(data[i]['attributes']['longitude']);  
+      const localDate = new Date(data[i]['last_updated']);  
+      strdateout = localDate.toLocaleString();  
+    } catch (e) {}  
+    if (lat && lon) {  
+      arr.push([lat, lon, strdateout]);  
+    }  
+  }  
+  
+  if (arr.length > 0) {  
+    let [latA, lonA] = [arr[0][0], arr[0][1]];  
+    arr1.push([latA, lonA, arr[0][2]]);  
+  
+    for (let i = 1; i < arr.length; i++) {  
+      const [latB, lonB] = [arr[i][0], arr[i][1]];  
+      if (latA !== latB || lonA !== lonB) {  
+        const dst = getDistance(latA, lonA, latB, lonB);  
+        if (dst > minimal_distance_variable) {  
+          arr1.push([latB, lonB, arr[i][2]]);  
+          [latA, lonA] = [latB, lonB];  
+        }  
+      }  
+    }  
+  }  
+  
+  await clearMap();  
+  drawMap(arr1);  
+  return arr1;  
+}  
+  
+function getDistance(latA, lonA, latB, lonB){  
+  try {  
+    const pi = Math.PI;  
+    const x = (latB - latA) * pi / 180;  
+    const y = ((lonB - lonA) * pi / 180) * Math.cos(((latA + latB) / 2) * pi / 180);  
+    return 6371 * Math.sqrt(x * x + y * y);  
+  } catch (e) {  
+    return 0;  
+  }  
+}  
+  
+function clearMap() {  
+  return new Promise(resolve => {  
+    if (routingControl) {  
+      mymap.removeControl(routingControl);  
+      routingControl = null;  
+    }  
+  
+    if (currentLocationMarker) {  
+      mymap.removeLayer(currentLocationMarker);  
+      currentLocationMarker = null;  
+    }  
+  
+    // удаляем всё, кроме тайл-слоя (чтобы не сбивать базовую карту)  
+    mymap.eachLayer(layer => {  
+      if (!(layer instanceof L.TileLayer)) {  
+        mymap.removeLayer(layer);  
+      }  
+    });  
+  
+    resolve();  
+  });  
+}  
+  
+let lastLat = null;  
+let lastLon = null;  
+
+async function updateCurrentLocation(entityId) {    
+  const res = await fetch(`/api/states/${entityId}`, {    
+    headers: {    
+      'Authorization': 'Bearer access_token_variable',    
+      'Content-Type': 'application/json'    
+    }    
+  });    
+    
+  if (!res.ok) return;    
+    
+  const data = await res.json();    
+  const lat = parseFloat(data.attributes.latitude);    
+  const lon = parseFloat(data.attributes.longitude);    
+  const entityPicture = data.attributes.entity_picture;    
+  const gpsAccuracy = parseFloat(data.attributes.gps_accuracy || 0);    
+  const lastUpdated = data.last_updated || new Date().toISOString(); // Дата и время точки
+    
+  if (!isNaN(lat) && !isNaN(lon)) {    
+    lastLat = lat;    
+    lastLon = lon;    
+    
+    if (!currentLocationMarker) {
+      const iconOptions = entityPicture ? L.divIcon({    
+        html: `    
+          <div class="entity-picture-wrapper" style="    
+            width: 56px;     
+            height: 56px;     
+            border-radius: 50%;  
+            border: 2px solid white;  
+            overflow: hidden;     
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);    
+            background: rgb(50 50 250 / 10%);    
+          ">    
+            <img src="${entityPicture}" alt="avatar" style="    
+              width: 100%;     
+              height: 100%;     
+              object-fit: cover;    
+            ">    
+          </div>`,    
+        className: '',    
+        iconSize: [56, 56],    
+        iconAnchor: [25, 50],    
+        popupAnchor: [0, -50]  
+      }) : L.icon({    
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',    
+        iconSize: [25, 41],    
+        iconAnchor: [12, 41],    
+        popupAnchor: [1, -34]    
+      });
+
+      currentLocationMarker = L.marker([lat, lon], { 
+        icon: iconOptions, 
+        zIndexOffset: 500 
+      }).addTo(mymap);
+
+      // Создание круга точности
+      currentAccuracyCircle = L.circle([lat, lon], {
+        radius: gpsAccuracy,
+        color: 'blue',
+        fillColor: 'rgba(50, 50, 250, 0.2)',
+        fillOpacity: 0.4,
+        weight: 1,
+        dashArray: '3'
+      }).addTo(mymap);
+    } 
+
+    // Плавное перемещение маркера и круга
+    animateMarkerAndCircle(currentLocationMarker, currentAccuracyCircle, [lat, lon], gpsAccuracy);
+
+    // Обновляем текст подсказки
+    const formattedTime = new Date(lastUpdated).toLocaleString("ru-RU", {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+
+    currentLocationMarker.bindTooltip(`${formattedTime}`, {
+      opacity: 0.7,
+      
+    })
+  }    
 }
+  
+// Функция анимации маркера и круга точности
+function animateMarkerAndCircle(marker, circle, targetLatLng, targetRadius) {
+  const duration = 500; // Длительность анимации (в мс)
+  const steps = 30; // Количество шагов анимации
+  let currentStep = 0;
+  
+  const startLatLng = marker.getLatLng();
+  const startRadius = circle.getRadius();
 
-myForm.elements.addEventListener("change", mainAction);
-myForm.date.addEventListener("change", mainAction);
+  const deltaLat = (targetLatLng[0] - startLatLng.lat) / steps;
+  const deltaLng = (targetLatLng[1] - startLatLng.lng) / steps;
+  const deltaRadius = (targetRadius - startRadius) / steps;
 
-async function doRequest(date, device) {
-  let url = `/api/history/period/${date}${time_zone_variable}?filter_entity_id=${device}`;
-  let response = await fetch(url, {
-    headers: {
-      'Authorization': 'Bearer access_token_variable',
-      'Content-Type': 'application/json'
+  const animation = setInterval(() => {
+    currentStep++;
+    const newLat = startLatLng.lat + deltaLat * currentStep;
+    const newLng = startLatLng.lng + deltaLng * currentStep;
+    const newRadius = startRadius + deltaRadius * currentStep;
+
+    marker.setLatLng([newLat, newLng]);
+    circle.setLatLng([newLat, newLng]);
+    circle.setRadius(newRadius);
+
+    if (currentStep >= steps) {
+      clearInterval(animation);
+      marker.setLatLng(targetLatLng);
+      circle.setLatLng(targetLatLng);
+      circle.setRadius(targetRadius);
     }
-  });
+  }, duration / steps);
+}
 
-  if (response.ok) {
-    let json = await response.json();
-    let data = json[0];
-    if (data !== undefined && data !== null) {
-      createMap(data);
-    } else {
-      clearMap();
-    }
+function startLiveTracking(entityId, basePath) {  
+  
+  if (liveTrackingTimer) clearInterval(liveTrackingTimer);  
+  liveTrackingTimer = setInterval(() => {  
+    updateCurrentLocation(entityId);  
+  }, 5000);  
+  updateCurrentLocation(entityId);  
+}  
+  
+function createMarker(lat, lon, tooltip, options = {}) {
+  const { entityPicture, start, end, zIndex } = options;
+  
+  let iconOptions = {
+    iconSize: [36, 36],
+    iconAnchor: [18, 36],
+    popupAnchor: [0, -36],
+    className: 'custom-marker'
+  };
+
+  if (entityPicture) {
+    iconOptions.iconUrl = entityPicture;
+    // Для кастомных картинок тени не добавляем
   } else {
-    clearMap();
+    if (start) {
+      iconOptions.iconUrl = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png';
+    } else if (end) {
+      iconOptions.iconUrl = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png';
+    } else {
+      iconOptions.iconUrl = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png';
+    }
+    iconOptions.iconSize = [25, 41]; // стандартный размер
+    iconOptions.iconAnchor = [12, 41];
+    iconOptions.popupAnchor = [1, -34];
+    // Добавляем тень только для стандартных маркеров
+    iconOptions.shadowUrl = 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png';
+    iconOptions.shadowSize = [41, 41];
+    iconOptions.shadowAnchor = [12, 41];
   }
+
+  const marker = L.marker([lat, lon], {
+    icon: L.icon(iconOptions),
+    zIndexOffset: zIndex || 200
+  }).addTo(mymap);
+
+  marker.bindTooltip(tooltip, { direction: 'top', offset: [0, -20], opacity: 0.9 });
 }
 
-function createMap(data) {
-arr = [];
-arr1 = [];
-for (var i=0; i<data.length; i++) {
-try {
-lat = parseFloat(data[i]['attributes']['latitude']);
-lon = parseFloat(data[i]['attributes']['longitude']);
-strdatein = data[i]['last_updated'];
-localDate = new Date(strdatein);
-strdateout = localDate.toLocaleString();
-}
-catch (e) {
-lat = 0;
-lon = 0;
-}
-lat = lat || 0;
-lon = lon || 0;
-if (lat !== 0 && lon !== 0){
-var newLength = arr.push([lat,lon,strdateout]);
-}
-}
-if (arr.length > 0) {
-latA = arr[0][0];
-lonA = arr[0][1];
-var newLength = arr1.push([latA,lonA,arr[0][2]]);
-for (var i=1; i<arr.length; i++) {
-latB = arr[i][0];
-lonB = arr[i][1];
-if (latA !== latB && lonA !== lonB) {
-dst = getDistance(latA, lonA, latB, lonB);
-if (dst > minimal_distance_variable){
-var newLength = arr1.push([latB,lonB,arr[i][2]]);
-latA = arr[i][0];
-lonA = arr[i][1];
-}
-}
-}
-}
-clearMap();
-drawMap(arr1);
-}
-
-function getDistance(latA, lonA, latB, lonB){
-dst = 0;
-try {
-var pi = Math.PI;
-latRadA = latA * (pi/180);
-lonRadA = lonA * (pi/180);
-latRadB = latB * (pi/180);
-lonRadB = lonB * (pi/180);
-x = latRadB - latRadA;
-y = (lonRadB-lonRadA)*Math.cos((latRadB+latRadA)*0.5);
-dst = 6371*Math.sqrt(x*x+y*y);
-}
-catch (e) {
-}
-return dst;
-}
-
-function drawMap(massiv){
-if (massiv.length > 0) {
-for (var i=0; i<massiv.length; i++) {
-var marker = L.marker([massiv[i][0],massiv[i][1]]).addTo(mymap);
-marker.bindTooltip('(№'+(i+1).toString() + ') ' + massiv[i][2].toString());
-}
-var polyline = L.polyline(massiv, {color: 'red', weight: 2, opacity: 0.5}).addTo(mymap);
-mymap.fitBounds(polyline.getBounds());
-polyline.remove();
-}
-if (massiv.length > 1) {
-line = [massiv[0][0],massiv[0][1]];
-for (var i=1; i<massiv.length; i++) {
-var polyline = L.polyline([line, [massiv[i][0],massiv[i][1]]], {color: 'red', weight: 2, opacity: 0.7}).addTo(mymap);
-var arrowHead = L.polylineDecorator(polyline, {patterns: [{offset: '100%', repeat: 0, symbol: L.Symbol.arrowHead({pixelSize: 12, polygon: false, pathOptions: {stroke: true, opacity: 0.7, color: 'red',weight: 2}})}]}).addTo(mymap);
-line = [massiv[i][0],massiv[i][1]];
-}
-}
-}
-
-function clearMap(){
-if (mymap !== undefined && mymap !== null) {
-mymap.remove();
-}
-mymap = L.map('map').setView([55.755826,37.617], 12);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar', attribution: "Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors, <a href='https://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>"}).addTo(mymap);
-}
-
-mainAction();
-</script>
-</body>
+</script>  
+  
+</body>  
 </html>
