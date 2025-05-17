@@ -40,7 +40,7 @@ route:
   days: 7
   mindst: 0.08
   time_zone: "+03:00"
-  tiles_url: https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?{foo}
+  tiles_url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
   devices:
     - device_tracker.entity_id1
     - person.entity_id1
