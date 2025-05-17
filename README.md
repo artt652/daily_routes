@@ -36,11 +36,12 @@
 
 ```yaml
 route:
+  #haddr: удален, не используется 
   token: your_long_life_token
-  days: 7
-  mindst: 0.08
-  time_zone: "+03:00"
-  tiles_url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+  days: 10 # не обязательно, либо замените на своё количество дней для отображения
+  mindst: 0.08 # минимальная дистанция между точками 
+  time_zone: "+03:00" # не обязательно, либо замените на свой часовой пояс
+  tiles_url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png" # не обязательно, либо замените на свой источник карт
   devices:
     - device_tracker.entity_id1
     - person.entity_id1
