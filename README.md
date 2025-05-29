@@ -1,9 +1,9 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
 
-# Routes integration
+# Daily Routes
 
-<p>В Homeassistant использутся отслеживание на основе зон, и координаты передвижения объектов хранятся не все, а только те, которые зафиксированы при смене зоны. Чтобы этого избежать, в HA создается новый виртуальнный sensor, у которого атрибуты будут скопированы у нужного device_tracker, это позволяет сохранить всю историю предвижений.</p>
-<p>Данная интеграция позволяет отображать историю перемещений (назовем это маршрутами или направлениями) на карте в вашем HomeAssistant, используя библиотеку Leaflet, а также плагин <a href='https://github.com/bbecquet/Leaflet.PolylineDecorator'>leaflet.polylineDecorator.js</a></p>
+<p>Интеграция позволяет отображать историю перемещений на карте, используя библиотеку Leaflet, плагин <a href='https://github.com/bbecquet/Leaflet.PolylineDecorator'>Leaflet PolylineDecorator</a>, а так же строить маршрут по дорогам используя <a href='https://project-osrm.org/'>OSRM</a>.</p>
+<p>В Homeassistant использутся отслеживание на основе зон, и координаты передвижения объектов хранятся не все, а только те, которые зафиксированы при смене зоны. Чтобы этого избежать, интеграцией создаются новые виртуальные sensor, у которых атрибуты будут скопированы из нужного device_tracker или person, это позволяет сохранить всю историю предвижений.</p>
 
 Что нового:
 
@@ -19,20 +19,22 @@
 - Виртуальные сенсоры создаются для доменов device_tracker и person. </p>
   Для снижения нарузки на БД в состояние виртуальных сенсоров теперь пишутся координаты с округлением до 4 знаков
 - Добавлено отображение текущей позиции, с авто-обовлением позиции и отображение entity_picture: и gps_accuracy: если имеются
-- Добвлена опция маршрутизации по дорогам используя <a href='https://project-osrm.org/'> OSRM </a> (режим "На автомобиле")
+- Добвлена опция маршрутизации по дорогам используя <a href='https://project-osrm.org/'>OSRM</a> (режим "На автомобиле")
 
 2025/04/04 Обновление кода для совместимости с ХА 2025.X.
 
 <p><b>1. Установка</b></p>
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=artt652&category=integration&repository=ha_routes)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=artt652&category=integration&repository=ha_routes) 
+
+и далее следовать указаниям мастера установки.
 
 либо вручную:
 
 <p>Содержимое папки "route" скопировать в директорию /homeassistant/custom_components/route</p>
 
 <p><b>2. Настройка</b></p>
-<p>Добавьте в ваш файл конфигурации "configuration.yaml" следующие строки:</p>
+<p>Вручную, через добавление в  configuration.yaml: </p>
 
 ```yaml
 route:
@@ -49,5 +51,11 @@ route:
 
 <p>
   "device_tracker.entity_id1", "person.entity_id1" - объекты отслеживания</p> 
-  "your_long_life_token" - предварительно полученный во фронтенде HomeAssistant токен доступа для использования REST API</p>
+  "your_long_life_token" - предварительно полученный во фронтенде HomeAssistant токен доступа для использования REST API.</p>
 </p>
+
+<p>С помощью мастера настройки:</p>
+
+```yaml
+Функционал в разработке #Следуйте указаниям мастера настройки.
+```
