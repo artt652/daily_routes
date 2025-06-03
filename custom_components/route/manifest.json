@@ -7,6 +7,5 @@
   "dependencies": [],
   "codeowners": ["@artt652"],
   "iot_class": "calculated",
-  "integration_type": "entity",
   "requirements": []
 }
