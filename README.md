@@ -25,7 +25,7 @@
 
 <p><b>1. Установка</b></p>
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=artt652&category=integration&repository=ha_routes) 
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=artt652&category=integration&repository=daily_routes) 
 
 и далее следовать указаниям мастера установки.
 
