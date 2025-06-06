@@ -23,7 +23,6 @@ class GPSSensor(Entity):
         self._name = 'virtual_' + self._entity.replace('.', '_')
         self._state = ''
 
-    # for HASS
     @property
     def name(self):
         return self._name
@@ -43,7 +42,6 @@ class GPSSensor(Entity):
             ATTR_LONGITUDE: self._sensors_gps.states[self._entity][2],
         }
 
-        # Получение entity_picture из исходного объекта
         if (entity_state := self._hass.states.get(self._entity)):
             if entity_state.attributes.get("entity_picture"):
                 attrs["entity_picture"] = entity_state.attributes["entity_picture"]
