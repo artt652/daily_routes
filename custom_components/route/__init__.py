@@ -29,7 +29,6 @@ CONF_NUMBER_OF_DAYS = 'days'
 DEFAULT_NUMBER_OF_DAYS = 10
 CONF_MIN_DST = 'mindst'
 DEFAULT_MIN_DST = 0.08
-#CONF_HADDR = 'haddr'
 DEFAULT_TILES_URL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
 CONF_TILES_URL = 'tiles_url'
 
@@ -38,8 +37,6 @@ CONFIG_SCHEMA = vol.Schema({
         vol.Optional(CONF_TILES_URL, default=DEFAULT_TILES_URL): cv.string,
         vol.Optional(CONF_NUMBER_OF_DAYS, default=DEFAULT_NUMBER_OF_DAYS): cv.positive_int,
         vol.Optional(CONF_MIN_DST, default=DEFAULT_MIN_DST): cv.small_float,
-#        vol.Required(CONF_HADDR): cv.string,
-#        vol.Required(CONF_TIME_ZONE): cv.string,
         vol.Required(CONF_TOKEN): cv.string,
         vol.Required(CONF_DEVICES): vol.All(cv.ensure_list),
     })
@@ -82,16 +79,14 @@ async def async_setup(hass: HomeAssistant, config) -> bool:
         view = Route(hass, myconfig)  
         await view.async_create_files()  
         hass.http.register_view(view)
-#        ts = int(time.time())
   
         async_register_built_in_panel(  
             hass,  
             "iframe",  
-            "Routes",  
+            "Daily Routes",  
             "mdi:routes",  
             "myroute",  
             {"url": "/route/route.html"},
-#            {"url": f"/route/route.html?ts={ts}"},
             require_admin=False,  
         )  
     except Exception as e:  
@@ -113,11 +108,8 @@ class Route(HomeAssistantView):
       try:
         curr_dir = os.getcwd()
         base_path = os.path.join(curr_dir, 'custom_components', DOMAIN)
-
-        # Убираем query-параметры
         requested_file = requested_file.split('?')[0]
 
-        # Подменяем только route.html
         if requested_file == 'route.html':
             path = os.path.join(base_path, 'route_temp.html')
         else:
@@ -144,20 +136,16 @@ class Route(HomeAssistantView):
             filedata = filedata.replace('number_of_days_variable', str(self._cfg["numofd"]))
             filedata = filedata.replace('time_zone_variable', "'" + self._cfg["tz"] + "'")
             filedata = filedata.replace('access_token_variable', self._cfg["token"])
-#            filedata = filedata.replace('haddr_variable', "'" + self._cfg["haddr"] + "'")
             filedata = filedata.replace('minimal_distance_variable', str(self._cfg["mindst"]))
 
-            # Вставка координат zone.home
             home_zone = self.hass.states.get('zone.home')
             home_lat = home_zone.attributes.get('latitude', 55.755826) if home_zone else 55.755826
             home_lon = home_zone.attributes.get('longitude', 37.617) if home_zone else 37.617
             filedata = filedata.replace('__default_lat_variable__', str(home_lat))
             filedata = filedata.replace('__default_lon_variable__', str(home_lon))
             
-            #tiles
             filedata = filedata.replace('tiles_url_variable', "'" + self._cfg.get("tiles_url", DEFAULT_TILES_URL) + "'")
             
-            # Список устройств
             devices_var = '['
             for device in self._cfg["devs"]:
                 entity_domain = device.split('.')[0]
