@@ -1,41 +1,42 @@
-**Description / Описание**
-<p>This integration allows you to display the history of movements on the map of your HomeAssistant</p>
-<p>Интеграция позволяет отображать историю перемещений на карте в вашем HomeAssistant</p>
+**Описание**
 
-What's new: / Что нового:
+<p>Интеграция позволяет отображать историю перемещений на карте, используя библиотеку Leaflet, плагин <a href='https://github.com/bbecquet/Leaflet.PolylineDecorator'>Leaflet PolylineDecorator</a>, а так же строить маршрут по дорогам используя <a href='https://project-osrm.org/'>OSRM</a>.</p>
 
-2025/04/04 Update code for work with HA 2025.4 / Обновление кода для совместимости с ХА 2025
+<p>В Homeassistant использутся отслеживание на основе зон, и координаты передвижения объектов хранятся не все, а только те, которые зафиксированы при смене зоны. Чтобы этого избежать, интеграцией создаются новые виртуальные sensor, у которых атрибуты будут скопированы из нужного device_tracker или person, это позволяет сохранить всю историю предвижений.</p>
 
-**Pre-installation instructions**
-
-<p>The homeassistant API is designed to receive history only when state is change. Since the state of device_tracker is location in some zone or "not_home", then not all coordinates will be, but only those that were fixed when the states changed. You only seem to be able to get list of state change locations (when moving from zones). To avoid this, it is neccecary to create a new sensor in HA, in which the attributes will be copied from the desired device_tracker, and the state will be last_updated. This happens automatically. You only need to add the neccecary device_tracker to the configuration file. ATTENTION. Make sure the base_url parameter is correctly configured in the HA configuration.yaml </p>
-  
-<p>API homeassistant устроен так, что позволяет получать историю только при изменении состояний. Так как состоянием у device_tracker является расположение в какой либо зоне или "not_home", то и координаты будут не все, а только те, которые зафиксированы при смене состояний. Чтобы этого избежать нужно создать в HA новый sensor, у которого атрибуты будут скопированы у нужного device_tracker, а состоянием будет last_updated. Это происходит автоматически. Вам нужно лишь добавить нужный device_tracker в конфигурационный файл. ВНИМАНИЕ. Для правильной работы интеграции убедитесь, что в конфигурации HA правильно заполнен параметр base_url. </p>
-
-**Installation instructions:**
+**Пример конфигурации**
 
 ```yaml
 route:
-  days: num_days
-  mindst: your_min_dst
-  time_zone: your_timezone
   token: your_long_life_token
+  days: 10
+  mindst: 0.08
+  time_zone: "+03:00"
+  tiles_url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
   devices:
-    - your_device_tracker_entity_id1
-    - your_sensor_entity_id1
+    - device_tracker.entity_id
+    - person.entity_id
 ```
 
-**Configuration variables:**  
+**Описание параметров:**  
   
-key | description  
-:--- | :---  
-**days (Option)** | is number of days to choose from in history (это количество дней, для выбора из истории)
-**mindst (Option)** | is minimal distance between two points on map (минимальная дистанция между точками, для отображения на карте)
-**time_zone (Required)** | is your timezone, for example '+03:00' (ваш часовой пояс, например '+03:00')
-**token (Required)** | is the access token previously received in the frontend of HomeAssistant to use REST API (предварительно полученный во фронтенде HomeAssistant токен доступа для использования REST API)
-**devices (Required)** | the HA entityid's of your device_trackers or sensors(это ID ваших устройств, за которыми будете наблюдать)
+key | |description  
+:--- | --- |:---  
+**days** | *Optional* | Number of days to show / количество дней для выбора из истории
+**mindst** | *Optional* | Minimal distance between two points on map / минимальная дистанция между точками на карте)
+**time_zone** | *Optional* | Timezone, for example ```"+03:00"``` / часовой пояс, например ```"+03:00"```
+**tiles_url** | *Optional* | map tiles source / источник подложки карты
+**token** | *Required* | Long-lived access [token](https://my.home-assistant.io/redirect/profile_security/ "token") to use REST API (долгосрочный [токен](https://my.home-assistant.io/redirect/profile_security/ "token") доступа для использования REST API)
+**devices** | *Required* | ```entity_id``` for tracking, in```device_tracker``` or ```person``` domains  / ```entity_id``` для отслеживания, из доменов ```device_tracker``` или ```person```
 
-**Screenshots (very blurred!!!)**
+**Как добавить Яндекс-карту**
+
+1. В Кабинете разработчика Яндекса получите бесплатный [API ключ](https://developer.tech.yandex.ru/ "API ключ") для пакета «Tiles API». Ключ будет активирован в течение 15 минут после получения.
+2. В конфигурации укажите ```tiles_url: "https://tiles.api-maps.yandex.ru/v1/tiles/?{x}&y={y}&z={z}&lang=ru_RU&l=map&scale=2&projection=web_mercator&maptype=future_map&apikey=YOUR_API_KEY"```, либо измените url согласно [формату запроса.](https://yandex.ru/maps-api/docs/tiles-api/request.html "Формат запроса")
+3. Укажите в атрибутах карты [логотип](https://yandex.ru/maps-api/docs/tiles-api/index.html#using-logo "логотип") Яндекса.
+
+
+**Как это все выглядит**
 
 ![example][exampleimg]
 
@@ -43,4 +44,4 @@ key | description
 
 ***
 
-[exampleimg]: map.jpeg
+#[exampleimg]: map.jpeg
