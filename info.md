@@ -20,8 +20,8 @@ route:
 
 **Описание параметров:**  
   
-key |  |description  
-:--- | |:---  
+key | |description  
+:--- | --- |:---  
 **days** | *Optional* | Number of days to show / количество дней для выбора из истории
 **mindst** | *Optional* | Minimal distance between two points on map / минимальная дистанция между точками на карте)
 **time_zone** | *Optional* | Timezone, for example ```"+03:00"``` / часовой пояс, например ```"+03:00"```
@@ -44,4 +44,4 @@ key |  |description
 
 ***
 
-[exampleimg]: map.jpeg
+#[exampleimg]: map.jpeg
