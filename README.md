@@ -20,7 +20,7 @@ add repo, than click "download".
 - Config flow setup: *Not implemented yet.*
 - [Manually](info.md "Manually"):
  
- Add to```configuration.yaml```: </p>
+ Add to ```configuration.yaml```: </p>
 ```yaml
 route:
   token: <your_long_life_token>
