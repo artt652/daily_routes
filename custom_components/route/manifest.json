@@ -4,7 +4,7 @@
   "version": "1.0",
   "documentation": "https://github.com/artt652/ha_routes/blob/master/README.md",
   "issue_tracker": "https://github.com/artt652/ha_routes/issues",
-  "dependencies": [],
+  "dependencies": ["http"],
   "codeowners": ["@artt652"],
   "iot_class": "calculated",
   "requirements": []
