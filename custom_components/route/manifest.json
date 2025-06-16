@@ -3,7 +3,7 @@
   "name": "Daily Routes",
   "codeowners": ["@artt652"],
   "dependencies": ["http"],
-  "documentation": "https://github.com/artt652/ha_routes/blob/master/README.md",
+  "documentation": "https://github.com/artt652/ha_routes/blob/master/info.md",
   "iot_class": "calculated",
   "issue_tracker": "https://github.com/artt652/ha_routes/issues",
   "requirements": [],
