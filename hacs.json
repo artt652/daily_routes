@@ -1,4 +1,5 @@
 {
     "name": "Daily Routes",
-    "domains": []
+    "filename": "daily_routes.zip",
+    "zip_release": true
 }
