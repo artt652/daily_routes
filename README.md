@@ -1,7 +1,10 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
+[![Static Badge](https://img.shields.io/badge/Donate-ЮMoney-darkviolet?style=flat)](https://yoomoney.ru/fundraise/1B4FAD8FDBD.250626)
 # Daily Routes
 
 <p>See your daily movements on custom map.</p>
+
+Updated version of [ha_routes](https://github.com/mavrikkk/ha_routes) integration.
 
 <p><b>1. Installation</b></p>
 
