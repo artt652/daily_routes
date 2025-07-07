@@ -6,4 +6,5 @@
     "domains": ["sensor"],
     "homeassistant": "2023.5.0",
     "iot_class": "cloud_polling"
-}
+    "domains": []
+>
