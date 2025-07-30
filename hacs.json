@@ -1,6 +1,5 @@
 {
     "name": "Daily Routes",
-    "filename": "daily_routes.zip",
     "zip_release": false,
     "render_readme": true,
     "homeassistant": "2023.5.0"
