@@ -31,3 +31,4 @@ route:
     - <device_tracker.entity_id>
     - <person.entity_id>
 ```
+
