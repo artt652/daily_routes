@@ -80,15 +80,16 @@ async def async_setup(hass: HomeAssistant, config) -> bool:
         await view.async_create_files()  
         hass.http.register_view(view)
   
-        async_register_built_in_panel(  
-            hass,  
-            "iframe",  
-            "Daily Routes",  
-            "mdi:routes",  
-            "myroute",  
-            {"url": "/route/route.html"},
-            require_admin=False,  
-        )  
+        async_register_built_in_panel(
+            hass,
+            component_name="iframe",
+            sidebar_title="Daily Routes",
+            sidebar_icon="mdi:routes",
+            frontend_url_path="myroute",
+            config={"url": "/route/route.html"},
+            require_admin=False,
+        )
+        
     except Exception as e:  
         _LOGGER.error("Error creating panel: %s", e)  
         return False  
